@@ -1,0 +1,38 @@
+Azure Virtual Machine in Availability Zone 1
+
+## Overview
+This project creates a Linux Virtual Machine in **Availability Zone 1** on Microsoft Azure. An Availability Zone is a separate datacenter inside an Azure region, with its own power, cooling and network. Placing a VM in a zone protects it from a single datacenter failure.
+
+--- An Availability Zone (AZ) is a physically separate datacenter inside one Azure region. Each zone has its own power, cooling, and networking. Most regions that support zones have three: Zone 1, Zone 2, and Zone 3.
+--- When you create a VM in Zone 1, Azure places it in that specific datacenter. If you also put a second VM in Zone 2, one datacenter failure will not take down your whole application.
+How it works in real time
+          Users
+            |
+   Standard Load Balancer
+       /           \
+  VM-1 (Zone 1)   VM-2 (Zone 2)
+## Steps
+1. Create a Resource Group
+2. Create the VM and select **Availability zone → Zone 1**
+3. Choose Ubuntu 22.04 and Standard_B2s
+4. Use SSH public key authentication
+5. Create a VNet and Subnet, then add NSG rules for ports 22 and 80
+6. Review and create
+7. Verify: VM → Overview → Properties → **Availability zone = 1**
+8. Connect with SSH and install Nginx
+## Requirements
+- Azure subscription
+- Region that supports Availability Zones
+- Standard SKU public IP
+- SSH key pair
+## Real-Time Process
+1. The user sends a request to the public IP.
+2. The NSG checks the rules and allows only ports 22 and 80.
+3. The request reaches the VM in Zone 1.
+4. Nginx serves the web page.
+5. If Zone 1 fails, a second VM in Zone 2 behind a Load Balancer takes over (next improvement).
+## Tools Used
+- Azure Portal / Azure CLI
+- Ubuntu Linux
+- SSH
+- Nginx
